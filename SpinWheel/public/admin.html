@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · SET Chennai Outing 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-bubbles" id="bgBubbles"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-badge">SET</span>
+      <div class="brand-text">
+        <h1>Admin Dashboard <span class="year">2026</span></h1>
+        <p class="tagline">Host-only · Team rosters &amp; controls</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- LOGIN GATE -->
+  <section class="login-card" id="loginCard">
+    <h2>Host Login</h2>
+    <p class="login-hint">Enter the admin password to view team rosters.</p>
+    <input id="adminPassword" type="password" placeholder="Password" autocomplete="current-password" />
+    <button id="loginBtn" class="spin-btn">Unlock Dashboard 🔓</button>
+    <p id="loginMsg" class="message"></p>
+    <p><a class="admin-link" href="/">← Back to the spin wheel</a></p>
+  </section>
+
+  <!-- DASHBOARD (hidden until logged in) -->
+  <main class="admin-main" id="adminMain" style="display:none">
+    <div class="dashboard wide">
+      <div class="dash-head">
+        <h2>House Teams</h2>
+        <span class="total-pill">Total: <strong id="totalCount">0</strong></span>
+      </div>
+
+      <p class="balance-note" id="balanceNote"></p>
+
+      <div class="teams" id="teams"></div>
+
+      <div class="admin">
+        <button id="refreshBtn" class="mini-btn">🔄 Refresh</button>
+        <button id="undoBtn" class="mini-btn">↩ Undo last</button>
+        <button id="resetBtn" class="mini-btn danger">⟳ Reset all</button>
+        <button id="logoutBtn" class="mini-btn">🔒 Logout</button>
+      </div>
+
+      <p id="message" class="message"></p>
+      <p class="live-note">Auto-refreshing every 4 seconds · <a class="admin-link" href="/">Spin wheel page</a></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Made for SET Chennai Outing 2026 · Admin view</p>
+  </footer>
+
+  <script src="admin.js"></script>
+</body>
+</html>

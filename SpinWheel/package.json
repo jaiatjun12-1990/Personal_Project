@@ -1,0 +1,22 @@
+{
+  "name": "set-chennai-outing-2026-spinwheel",
+  "version": "1.0.0",
+  "description": "Team separation spin wheel for SET Chennai Outing 2026 - splits participants equally into 4 house teams.",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "spin-wheel",
+    "team-builder",
+    "outing"
+  ],
+  "author": "SET Chennai",
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.19.2"
+  }
+}

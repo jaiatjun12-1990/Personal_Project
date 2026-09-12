@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SET Chennai Outing 2026 - Team Spin Wheel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Floating confetti / bubbles background -->
+  <div class="bg-bubbles" id="bgBubbles"></div>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-badge">SET</span>
+      <div class="brand-text">
+        <h1>SET Chennai Outing <span class="year">2026</span></h1>
+        <p class="tagline">Spin the wheel &amp; discover your House!</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Viewer layout: only the wheel is shown. No team rosters. -->
+  <main class="layout layout-solo">
+    <section class="wheel-panel">
+      <div class="wheel-stage">
+        <div class="pointer" aria-hidden="true"></div>
+        <canvas id="wheel" width="440" height="440"></canvas>
+        <div class="wheel-center" id="wheelCenter">SPIN</div>
+      </div>
+
+      <div class="controls">
+        <label class="name-label" for="playerName">Who's spinning?</label>
+        <input
+          id="playerName"
+          type="text"
+          placeholder="Enter your name…"
+          autocomplete="off"
+          maxlength="40"
+        />
+        <button id="spinBtn" class="spin-btn">🎡 SPIN THE WHEEL</button>
+        <p id="message" class="message"></p>
+        <p class="spun-note">Spins so far: <strong id="totalCount">0</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Result popup -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="result-modal" id="resultModal">
+      <div class="burst" id="burst"></div>
+      <p class="result-eyebrow">Congratulations</p>
+      <h2 class="result-name" id="resultName">Name</h2>
+      <p class="result-you-are">you belong to</p>
+      <div class="result-team" id="resultTeam">House</div>
+      <button class="close-btn" id="closeModal">Awesome! 🎉</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>Made for SET Chennai Outing 2026 · Team separation done fairly &amp; equally</p>
+    <p><a class="admin-link" href="/admin">Host / Admin</a></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

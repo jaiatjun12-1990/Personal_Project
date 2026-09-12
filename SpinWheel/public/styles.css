@@ -1,0 +1,461 @@
+/* ---------- Base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --blue: #2563eb;
+  --green: #16a34a;
+  --orange: #ea580c;
+  --red: #dc2626;
+  --ink: #1e293b;
+  --card: rgba(255, 255, 255, 0.92);
+}
+
+body {
+  font-family: "Poppins", system-ui, sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #6d28d9 0%, #2563eb 35%, #0ea5e9 70%, #06b6d4 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* ---------- Floating bubbles background ---------- */
+.bg-bubbles {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-bubbles span {
+  position: absolute;
+  bottom: -120px;
+  border-radius: 50%;
+  opacity: 0.25;
+  animation: rise linear infinite;
+}
+@keyframes rise {
+  to { transform: translateY(-120vh) rotate(360deg); }
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 16px 16px 4px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+.brand-badge {
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  color: #fff;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  padding: 10px 16px;
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+  letter-spacing: 1px;
+}
+.brand-text h1 {
+  font-family: "Baloo 2", sans-serif;
+  font-size: clamp(22px, 4vw, 40px);
+  color: #fff;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+  line-height: 1.1;
+}
+.brand-text .year {
+  background: linear-gradient(90deg, #fde047, #fb923c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.tagline {
+  color: #e0f2fe;
+  font-weight: 600;
+  font-size: clamp(13px, 2vw, 16px);
+}
+
+/* ---------- Layout ---------- */
+.layout {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
+/* ---------- Wheel panel ---------- */
+.wheel-panel {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 28px 24px 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+.wheel-stage {
+  position: relative;
+  /* Fit within both width and height of the viewport, leaving room for
+     the header, name box, button, and the shadow rings around the wheel. */
+  width: min(440px, 78vw, 58vh);
+  max-width: 100%;
+  margin: 18px auto 0;
+  aspect-ratio: 1;
+}
+#wheel {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px #fff, 0 0 0 12px #0f172a, 0 14px 32px rgba(0,0,0,.35);
+  transition: transform 5s cubic-bezier(0.17, 0.67, 0.16, 1);
+  will-change: transform;
+}
+.pointer {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 34px solid #facc15;
+  filter: drop-shadow(0 4px 4px rgba(0,0,0,.4));
+  z-index: 5;
+}
+.wheel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: #0f172a;
+  color: #facc15;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,.4);
+  z-index: 4;
+  border: 4px solid #fff;
+}
+
+/* ---------- Controls ---------- */
+.controls {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.name-label {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+}
+#playerName {
+  width: 100%;
+  max-width: 340px;
+  padding: 14px 18px;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+#playerName:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+.spin-btn {
+  width: 100%;
+  max-width: 340px;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 16px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: .5px;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  box-shadow: 0 10px 24px rgba(239, 68, 68, 0.4);
+  transition: transform .1s, box-shadow .2s, opacity .2s;
+}
+.spin-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(239,68,68,.5); }
+.spin-btn:active { transform: translateY(0); }
+.spin-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.message {
+  min-height: 22px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #b91c1c;
+}
+.message.ok { color: #15803d; }
+
+/* ---------- Dashboard ---------- */
+.dashboard {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(6px);
+}
+.dash-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.dash-head h2 {
+  font-family: "Baloo 2", sans-serif;
+  font-size: 22px;
+}
+.total-pill {
+  background: #0f172a;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.teams { display: flex; flex-direction: column; gap: 12px; }
+.team-card {
+  border-radius: 16px;
+  padding: 12px 14px;
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(0,0,0,.18);
+}
+.team-card .team-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+}
+.team-card .count {
+  background: rgba(255,255,255,.25);
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 14px;
+}
+.team-card .members {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 130px;
+  overflow-y: auto;
+}
+.member-chip {
+  background: rgba(255,255,255,.22);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.members:empty::after {
+  content: "No members yet";
+  font-size: 12px;
+  opacity: .8;
+}
+
+.admin { display: flex; gap: 10px; margin-top: 16px; }
+.mini-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  background: #e2e8f0;
+  color: #334155;
+  transition: background .2s;
+}
+.mini-btn:hover { background: #cbd5e1; }
+.mini-btn.danger { background: #fee2e2; color: #b91c1c; }
+.mini-btn.danger:hover { background: #fecaca; }
+
+/* ---------- Result modal ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.6);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+.result-modal {
+  position: relative;
+  background: #fff;
+  border-radius: 26px;
+  padding: 40px 34px;
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 30px 70px rgba(0,0,0,.45);
+  animation: pop .4s cubic-bezier(.18,.89,.32,1.28);
+  overflow: hidden;
+}
+@keyframes pop {
+  from { transform: scale(.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.result-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 700;
+}
+.result-name {
+  font-family: "Baloo 2", sans-serif;
+  font-size: 28px;
+  margin: 4px 0;
+  color: var(--ink);
+}
+.result-you-are { color: #64748b; font-size: 14px; }
+.result-team {
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  font-size: 30px;
+  color: #fff;
+  padding: 14px;
+  border-radius: 16px;
+  margin: 14px 0 22px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.2);
+}
+.close-btn {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 14px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #6d28d9, #2563eb);
+  box-shadow: 0 8px 20px rgba(37,99,235,.4);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #e0f2fe;
+  font-size: 13px;
+  padding: 10px 16px 30px;
+}
+.admin-link {
+  color: #e0f2fe;
+  opacity: .85;
+  font-weight: 600;
+  text-decoration: underline;
+}
+.admin-link:hover { opacity: 1; }
+
+/* ---------- Viewer: centered wheel only ---------- */
+.layout-solo {
+  grid-template-columns: 1fr;
+  max-width: 620px;
+  padding: 12px 16px 16px;
+}
+.layout-solo .wheel-panel {
+  padding: 16px 20px 18px;
+}
+.layout-solo .controls {
+  margin-top: 14px;
+  gap: 8px;
+}
+.spun-note {
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* ---------- Admin login card ---------- */
+.login-card {
+  position: relative;
+  z-index: 2;
+  max-width: 400px;
+  margin: 40px auto;
+  background: var(--card);
+  border-radius: 24px;
+  padding: 30px 26px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,.28);
+  backdrop-filter: blur(6px);
+}
+.login-card h2 {
+  font-family: "Baloo 2", sans-serif;
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+.login-hint { color: #64748b; font-size: 14px; margin-bottom: 16px; }
+.login-card input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  margin-bottom: 14px;
+}
+.login-card input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px rgba(37,99,235,.15);
+}
+.login-card .spin-btn { max-width: 100%; }
+.login-card .admin-link { color: #2563eb; display: inline-block; margin-top: 14px; }
+
+/* ---------- Admin dashboard ---------- */
+.admin-main {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+.dashboard.wide .members { max-height: 220px; }
+.balance-note {
+  font-weight: 600;
+  font-size: 14px;
+  color: #334155;
+  margin: 4px 0 12px;
+}
+.admin { flex-wrap: wrap; }
+.live-note {
+  margin-top: 12px;
+  font-size: 12.5px;
+  color: #64748b;
+}
+.live-note .admin-link { color: #2563eb; }
