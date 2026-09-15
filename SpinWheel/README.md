@@ -15,7 +15,32 @@ live dashboard shows every team's roster so you can organize people at the venue
 - Live team dashboard with member chips and counts.
 - Prevents the same name being assigned twice.
 - **Undo last** and **Reset all** controls for the host.
-- Data is saved to `data/assignments.json`, so it survives a server restart.
+- **Durable storage** — uses PostgreSQL when a `DATABASE_URL` is set (survives
+  restarts / redeploys on hosts like Render), and falls back to a local JSON
+  file (`data/assignments.json`) when running on your own machine. Data is only
+  cleared when the host presses **Reset all**.
+
+## ☁️ Deploying on Render (with persistent data)
+
+On Render's **free** web service, the disk is wiped every time the service
+sleeps or redeploys — so file/SQLite storage loses data. To keep data, use a
+free PostgreSQL database (stored separately, so it survives restarts):
+
+1. **Create the database:** Render dashboard → **New +** → **PostgreSQL** →
+   choose the **Free** plan → Create. Wait until it's "Available".
+2. **Copy the connection string:** open the database → copy the
+   **Internal Database URL** (looks like `postgresql://user:pass@host/db`).
+3. **Link it to the web service:** open your Spin Wheel web service →
+   **Environment** → **Add Environment Variable**:
+   - Key: `DATABASE_URL`
+   - Value: *(paste the Internal Database URL)*
+   - (Optional) `ADMIN_PASSWORD` = a private password, `TEAM_CAP` = `0` or a number.
+4. **Save** — Render redeploys automatically. On startup the log prints
+   `Storage: PostgreSQL (durable)`.
+
+Now entries persist across refreshes, sleeps, and redeploys, and are cleared
+only via **Reset all**. (Note: Render's free Postgres expires after ~30 days.)
+
 
 ## 🚀 How to run
 
