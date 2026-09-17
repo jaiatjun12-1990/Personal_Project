@@ -73,13 +73,33 @@ function drawWheel() {
     ctx.translate(CENTER, CENTER);
     ctx.rotate(start + seg / 2);
     ctx.textAlign = "right";
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = isLightColor(team.color) ? "#1e293b" : "#fff";
     ctx.font = "700 20px 'Baloo 2', sans-serif";
-    ctx.shadowColor = "rgba(0,0,0,0.35)";
+    ctx.shadowColor = isLightColor(team.color)
+      ? "rgba(255,255,255,0.6)"
+      : "rgba(0,0,0,0.35)";
     ctx.shadowBlur = 4;
     ctx.fillText(team.name, RADIUS - 18, 7);
     ctx.restore();
   });
+}
+
+/* Determine if a hex color is light (so we use dark text for contrast) */
+function isLightColor(hex) {
+  const c = hex.replace("#", "");
+  const full =
+    c.length === 3
+      ? c
+          .split("")
+          .map((ch) => ch + ch)
+          .join("")
+      : c;
+  const r = parseInt(full.slice(0, 2), 16);
+  const g = parseInt(full.slice(2, 4), 16);
+  const b = parseInt(full.slice(4, 6), 16);
+  // Perceived luminance (ITU-R BT.601)
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.7;
 }
 
 /* ---------- Spin ---------- */
@@ -172,6 +192,7 @@ function showResult(name, team) {
   els.resultName.textContent = name;
   els.resultTeam.textContent = team.name;
   els.resultTeam.style.background = team.color;
+  els.resultTeam.style.color = isLightColor(team.color) ? "#1e293b" : "#fff";
   els.modalOverlay.classList.add("show");
   launchConfetti(team.color);
 }

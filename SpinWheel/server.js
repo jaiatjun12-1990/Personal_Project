@@ -39,10 +39,10 @@ const TEAM_CAP = Number(process.env.TEAM_CAP || 0);
 
 // ---- Team definitions (index order matters: matches wheel segments) ----
 const TEAMS = [
+  { id: "red", name: "Red House", color: "#dc2626" },
   { id: "blue", name: "Blue House", color: "#2563eb" },
   { id: "green", name: "Green House", color: "#16a34a" },
-  { id: "orange", name: "Orange House", color: "#ea580c" },
-  { id: "red", name: "Red House", color: "#dc2626" },
+  { id: "white", name: "White House", color: "#f8fafc" },
 ];
 
 /* =======================================================================

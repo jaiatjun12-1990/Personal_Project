@@ -116,11 +116,12 @@ function render(data) {
   els.teams.innerHTML = TEAMS.map((t) => {
     const members = byTeam[t.id] || [];
     const capLabel = data.cap && data.cap > 0 ? ` / ${data.cap}` : "";
+    const light = isLightColor(t.color);
     const chips = members
       .map((name, i) => `<span class="member-chip">${i + 1}. ${escapeHtml(name)}</span>`)
       .join("");
     return `
-      <div class="team-card" style="background:${t.color}">
+      <div class="team-card${light ? " light" : ""}" style="background:${t.color}">
         <div class="team-top">
           <span>${t.name}</span>
           <span class="count">${members.length}${capLabel}</span>
@@ -128,6 +129,20 @@ function render(data) {
         <div class="members">${chips}</div>
       </div>`;
   }).join("");
+}
+
+/* Determine if a hex color is light (so we use dark text for contrast) */
+function isLightColor(hex) {
+  const c = hex.replace("#", "");
+  const full =
+    c.length === 3
+      ? c.split("").map((ch) => ch + ch).join("")
+      : c;
+  const r = parseInt(full.slice(0, 2), 16);
+  const g = parseInt(full.slice(2, 4), 16);
+  const b = parseInt(full.slice(4, 6), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.7;
 }
 
 function escapeHtml(str) {
